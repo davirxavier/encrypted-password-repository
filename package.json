@@ -1,0 +1,31 @@
+{
+  "name": "EPR",
+  "version": "1.0.0",
+  "description": "Aplicativo web que salva e visualiza senhas criptografadas de diversos usuários.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Davi Xavier, João Elias",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "crypto-js": "^4.0.0",
+    "cryptr": "^6.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "express-session": "^1.17.1",
+    "express-sslify": "^1.2.0",
+    "handlebars": "^4.7.6",
+    "mongoose": "^7.5.3",
+    "nodemon": "^2.0.15",
+    "openssl-nodejs": "^1.0.5",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  }
+}

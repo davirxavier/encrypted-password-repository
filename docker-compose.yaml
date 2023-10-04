@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  epr-server:
+    image: epr-server
+    pull_policy: build
+    restart: unless-stopped
+    depends_on:
+      - epr-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CRYPT_SECRET: "drxdrxdrx"
+      ENFORCE_HTTPS: "false"
+      DB_URI: "mongodb://epr-db/eprdb"
+    ports:
+      - "3000:3000"
+  epr-db:
+    image: mongo:latest
+    restart: unless-stopped
+    volumes:
+      - epr-mongo:/data/db
+volumes:
+  epr-mongo:
