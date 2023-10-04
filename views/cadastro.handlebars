@@ -1,0 +1,51 @@
+<div class="container login-container">
+    <div id="iconcontainer">
+        <img id="iconimg" src="/img/appicon.png" alt="icon">
+        <h5 style="color: white; padding-top: 5px;">EPR - Cadastro</h5>
+    </div>
+
+    <div>
+        <div class="form-group">
+            <label for="inputemail" class="login-label">Insira seu e-mail</label>
+            <input class="form-control" id="inputemail" type="email" placeholder="E-mail" name="email">
+        </div>
+
+        <div class="form-group">
+            <label for="inputemailcon" class="login-label">Confirme o e-mail</label>
+            <input class="form-control" id="inputemailcon" type="email" placeholder="Confirme o e-mail" name="emailcon">
+        </div>
+
+        <div class="form-group">
+            <label for="inputpassword" class="login-label">Insira sua senha</label>
+            <input class="form-control" id="inputpassword" type="password" placeholder="Senha" name="senha">
+
+            <small id="emailHelp" class="form-text" style="color: white">
+                A sua senha deve conter pelo menos:
+                <ul>
+                    <li>8 caracteres.</li>
+                    <li>1 caractere maiúsculo.</li>
+                    <li>1 caractere minúsculo.</li>
+                    <li>1 caractere especial (Ex.: &, *, %, ?, etc.).</li>
+                </ul>
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="inputpasswordcon" class="login-label">Confirme sua senha</label>
+            <input class="form-control" id="inputpasswordcon" type="password" placeholder="Confirme a senha" name="senhacon">
+        </div>
+
+        <div class="form-group form-check noselect" id="checkboxTermsDiv">
+            <input type="checkbox" class="form-check-input" id="checkboxTerms">
+            <label style="color: white;" class="form-check-label" for="checkboxTerms">Você aceita e concorda com nossos
+                <a href="/termos">termos de serviço</a> e <a href="/privacidade">políticas de privacidade</a>.</label>
+        </div>
+
+        <div class="form-group" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; margin-top: 35px;">
+            <a href="/login" class="btn btn-outline-light">Voltar ao login</a>
+            <input id="buttonCadastrar" type="submit" class="btn btn-light" value="Confirmar cadastro">
+        </div>
+    </div>
+</div>
+
+<script type="module" src="/scripts/cadastro/cadastro.js"></script>

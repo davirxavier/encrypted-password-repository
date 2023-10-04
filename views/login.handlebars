@@ -1,0 +1,36 @@
+<div class="container login-container">
+    <div id="iconcontainer">
+        <img src="/img/appicon.png" alt="icon" style="">
+        <h4 style="color: white;">EPR - Login</h4>
+    </div>
+
+    <form action="/login" method="post">
+        <div class="form-group">
+            <label for="inputemail" class="login-label">Insira seu e-mail</label>
+            <input class="form-control" id="inputemail" type="email" placeholder="E-mail" name="email">
+        </div>
+
+        <div class="form-group">
+            <label for="inputpassword" class="login-label">Insira sua senha</label>
+            <input class="form-control" id="inputpassword" type="password" placeholder="Senha" name="senha">
+        </div>
+
+        <div class="form-group alert alert-danger" style="visibility: {{ errorvisible }}" role="alert">
+            <label id="labelerror">{{ errortext }}</label>
+        </div>
+
+        <div class="form-group" style="display: flex; flex-direction: row; align-items: center; justify-content: space-around;">
+            <a href="/cadastro" class="btn btn-outline-light" style="">Cadastre-se</a>
+            <input type="submit" class="btn btn-light" value="     Entrar     ">
+        </div>
+
+        <div class="form-group" style="display: flex; flex-direction: column; align-items: center;">
+            <!-- <a href="/esqueceu-senha" class="">Esqueceu sua senha?</a> -->
+        </div>
+
+    </form>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <a href="/faq" class="btn text-white btn-sm">O que é este site?</a>
+    </div>
+</div>

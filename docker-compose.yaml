@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  epr-server:
+    image: epr-server
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CRYPT_SECRET: "${CRYPT_SECRET}"
+      ENFORCE_HTTPS: "${ENFORCE_HTTPS}"
+    ports:
+      - "${EXTERNAL_SERVER_PORT}:3000"

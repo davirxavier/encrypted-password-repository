@@ -1,0 +1,41 @@
+<div class="main">
+    <div class="lateral-bar">
+        <div id="iconcontainer">
+            <h5 class="title-epr">EPR</h5>
+            <img src="/img/appicon.png" id="img-icon" alt="icon" style="">
+        </div>
+        <hr style="background-color: lightgray; margin: 4px 8px 4px 8px;">
+
+        <button class="btn btn-dark lateral-button" id="newCategoryButton">
+            Categoria
+            <img src="img/add_block_white24dp.png" alt="">
+        </button>
+
+        <button id="logoutButton" class="btn btn-dark lateral-button" style="margin: auto 0 0 0">
+            Sair
+            <img src="img/logout_white24dp.png" alt="">
+        </button>
+    </div>
+
+    <div class="right-box">
+        <div class="navbar-epr">
+            <div class="form-horizontal my-2 my-lg-0 searchbar" style="width: 100%;">
+                <input id="searchBar" name="search" class="form-control mr-sm-2 searchbar-bar" type="text" placeholder="Pesquisar" aria-label="Pesquisar">
+                <button class="btn-transparent ripple noselect" id="searchBarClear">
+                    <img src="img/close_black18dp.png">
+                </button>
+            </div>
+        </div>
+
+        <div class="categories-div" id="categories-div">
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+<script type="module" src="/scripts/index/newPassword.js"></script>
+<script type="module" src="/scripts/index/indexLoad.js"></script>
+<script type="module" src="/scripts/index/newCategory.js"></script>
+<script type="module" src="/scripts/index/logout.js"></script>
+<script src="/scripts/index/deletePassword.js"></script>
