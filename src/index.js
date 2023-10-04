@@ -139,8 +139,7 @@ app.post('/login', function (req, res, next)
 })
 app.get("/logout", authenticationMiddleware(), (req, res) =>
 {
-    req.logout()
-    res.redirect("/login")
+    req.logout(() => res.redirect("/login"));
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,7 +284,7 @@ app.delete("/categorias", authenticationMiddleware(), (req, res) =>
             {
                 if (isValid)
                 {
-                    categoriaModel.remove({_id: new mongoose.Types.ObjectId(id), emailDono: user.email}).then(() =>
+                    categoriaModel.deleteOne({_id: new mongoose.Types.ObjectId(id), emailDono: user.email}).then(() =>
                     {
                         res.status(200)
                         res.send("Removida com sucesso.")
@@ -304,7 +303,7 @@ app.post("/categorias", authenticationMiddleware(), function (req, res)
     let nome = req.body.nome
     let senha = req.body.senha
 
-    let id = mongoose.Types.ObjectId((req.session.passport.user))
+    let id = new mongoose.Types.ObjectId((req.session.passport.user))
     usuarioModel.findById(id).then((user) =>
     {
         bcrypt.compare(senha, user.senha, (err, isValid) =>
@@ -347,7 +346,7 @@ app.put("/categorias", authenticationMiddleware(), function (req, res)
     let senha = req.body.senha
     let idcat = req.body.id
 
-    let id = mongoose.Types.ObjectId((req.session.passport.user))
+    let id = new mongoose.Types.ObjectId((req.session.passport.user))
     usuarioModel.findById(id).then((user) =>
     {
         bcrypt.compare(senha, user.senha, (err, isValid) =>
@@ -524,7 +523,7 @@ app.delete("/senhas", authenticationMiddleware(), (req, res)=>
     {
         usuarioModel.findById(req.session.passport.user).then(user =>
         {
-            senhaModel.remove({_id: senhaID}).then(() =>
+            senhaModel.deleteOne({_id: senhaID}).then(() =>
             {
                 res.status(200)
                 res.send("Senha apagada com sucesso.")

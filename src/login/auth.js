@@ -7,18 +7,16 @@ const ObjectId = mongoose.Types.ObjectId
 
 function findUser(email, callback)
 {
-    userModel.findOne({ email: email }, (err, obj) =>
-    {
-        callback(err, obj)
-    })
+    userModel.findOne({ email: email })
+        .then(user => callback(undefined, user))
+        .catch(err => callback(err, undefined));
 }
 
 function findUserById(id, callback)
 {
-    userModel.findOne({ _id: ObjectId(id) }, (err, doc) =>
-    {
-        callback(err, doc);
-    });
+    userModel.findOne({ _id: new ObjectId(id) })
+        .then(user => callback(undefined, user))
+        .catch(err => callback(err, undefined));
 }
 
 passport.serializeUser(function(user, done)

@@ -10,5 +10,8 @@ services:
     environment:
       CRYPT_SECRET: "${CRYPT_SECRET}"
       ENFORCE_HTTPS: "${ENFORCE_HTTPS}"
+      DB_URI: "mongodb://epr-db/eprdb"
     ports:
       - "${EXTERNAL_SERVER_PORT}:3000"
+  epr-db:
+    image: mongo:latest
