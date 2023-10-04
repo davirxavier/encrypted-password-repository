@@ -25,7 +25,7 @@ const senhaModel = require('./db/schemas/senhas')
 // Crypt
 const crypt = require("./crypt/crypt")
 const router = express.Router();
-const basePath = '/';
+const basePath = '/epr/';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Sessão
@@ -242,7 +242,7 @@ router.get("/index", authenticationMiddleware(), function (req, res)
 })
 router.get("/", function (req, res)
 {
-    res.redirect("./login")
+    res.redirect("login")
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
