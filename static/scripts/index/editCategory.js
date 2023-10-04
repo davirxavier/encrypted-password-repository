@@ -31,7 +31,7 @@ export function editarCategoriaDialog(categoria)
                     let nome = document.getElementById("editarCategoriaInputNome")
                     let senha = document.getElementById("editarCategoriaInputSenha")
 
-                    $.ajax("/categorias",
+                    $.ajax("categorias",
                         {
                             type: "PUT",
                             data:JSON.stringify({

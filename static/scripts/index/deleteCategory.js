@@ -32,7 +32,7 @@ export function dialogoExcluir(categoria)
                 {
                     let senha = document.getElementById("categoriaInputSenha")
 
-                    $.ajax("/categorias",
+                    $.ajax("categorias",
                         {
                             type: "DELETE",
                             data: JSON.stringify({

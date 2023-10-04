@@ -38,7 +38,7 @@ export function newPasswordDialog (categoria)
                     let senha_cript = document.getElementById("senhaInputSenha")
                     let senha = document.getElementById("senhaInputSenhaConta")
 
-                    $.ajax("/senhas",
+                    $.ajax("senhas",
                         {
                             type: "POST",
                             data:JSON.stringify({

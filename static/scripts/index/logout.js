@@ -1,5 +1,5 @@
 const logoutButton = document.getElementById("logoutButton")
 logoutButton.onclick = (e) =>
 {
-    window.location.href = "/logout"
+    window.location.href = "logout"
 }

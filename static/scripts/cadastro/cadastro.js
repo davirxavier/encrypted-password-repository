@@ -39,7 +39,7 @@ buttonCadastrar.onclick = function (e)
             buttonCadastrar.classList.remove("red-outline")
         }
 
-        $.ajax("/cadastro",
+        $.ajax("cadastro",
             {
                 type: "POST",
                 data: JSON.stringify({
@@ -56,7 +56,7 @@ buttonCadastrar.onclick = function (e)
                             callbacks:{
                                 cancelClick: function ()
                                 {
-                                    window.location.href = "/login"
+                                    window.location.href = "login"
                                 }
                             }
                         })

@@ -35,7 +35,7 @@ newCategoryButton.onclick = () =>
                     let nome = document.getElementById("categoriaInputNome")
                     let senha = document.getElementById("categoriaInputSenha")
 
-                    $.ajax("/categorias",
+                    $.ajax("categorias",
                         {
                             type: "POST",
                             data:JSON.stringify({

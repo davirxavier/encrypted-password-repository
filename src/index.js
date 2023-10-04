@@ -24,11 +24,13 @@ const senhaModel = require('./db/schemas/senhas')
 
 // Crypt
 const crypt = require("./crypt/crypt")
+const router = express.Router();
+const basePath = '/epr/';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Sessão
 require('./login/auth')(passport);
-app.use(session({
+router.use(session({
     store: new MongoStore({
         url: db.url,
         ttl: 60 * 60
@@ -41,19 +43,16 @@ app.use(session({
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Middlewares
-app.use('/css', express.static(__dirname + '/../static/css'));
-app.use('/fonts', express.static(__dirname + '/../static/fonts'));
-app.use('/img', express.static(__dirname + '/../static/img'));
-app.use('/scripts', express.static(__dirname + '/../static/scripts'));
-app.use(passport.initialize({userProperty: "email"}));
-app.use(passport.session({}));
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use('/epr', express.static(__dirname + '/../static'));
+router.use(passport.initialize({userProperty: "email"}));
+router.use(passport.session({}));
+router.use(bodyParser.json())
+router.use(bodyParser.urlencoded({extended: true}))
 
 // Enforce HTTPS
 if ((process.env.ENFORCE_HTTPS || "").toLocaleLowerCase() === "true")
 {
-    app.use(sslify.HTTPS({ trustProtoHeader: true }))
+    router.use(sslify.HTTPS({ trustProtoHeader: true }))
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,17 +71,17 @@ function authenticationMiddleware()
             return next()
         }
 
-        res.redirect('/login?fail=notlogged')
+        res.redirect(basePath + 'login?fail=notlogged')
     }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Login routes
-app.get("/login", function (req, res)
+router.get("/login", function (req, res)
 {
     if (req.isAuthenticated())
     {
-        res.redirect("/index")
+        res.redirect(basePath + "index")
         return;
     }
 
@@ -103,7 +102,7 @@ app.get("/login", function (req, res)
         }
     }
 
-    const stylesheets = "<link rel='stylesheet' href='/css/login.css'>";
+    const stylesheets = "<link rel='stylesheet' href='css/login.css'>";
     res.render("login", {
         title: "Login | EPR",
         stylesheets: stylesheets,
@@ -111,11 +110,11 @@ app.get("/login", function (req, res)
         errortext: errortext
     })
 })
-app.post('/login', function (req, res, next)
+router.post('/login', function (req, res, next)
 {
     passport.authenticate("local", {
-        successRedirect: "/index",
-        failureRedirect: "/login?fail=incorrect"
+        successRedirect: basePath + "index",
+        failureRedirect: basePath + "login?fail=incorrect"
     }, function (err, user, info)
     {
         if (err)
@@ -124,7 +123,7 @@ app.post('/login', function (req, res, next)
         }
         if (!user)
         {
-            return res.redirect("/login?fail=incorrect")
+            return res.redirect(basePath + "login?fail=incorrect")
         }
 
         req.logIn(user, function (err)
@@ -133,19 +132,19 @@ app.post('/login', function (req, res, next)
             {
                 return next(err);
             }
-            return res.redirect("/index");
+            return res.redirect(basePath + "index");
         });
     })(req, res, next)
 })
-app.get("/logout", authenticationMiddleware(), (req, res) =>
+router.get("/logout", authenticationMiddleware(), (req, res) =>
 {
-    req.logout(() => res.redirect("/login"));
+    req.logout(() => res.redirect(basePath + "login"));
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // FAQ
-app.get("/faq", (req, res) => {
-    const stylesheets = "<link rel='stylesheet' href='/css/login.css'>";
+router.get("/faq", (req, res) => {
+    const stylesheets = "<link rel='stylesheet' href='css/login.css'>";
     res.render("faq", {
         title: "Sobre | EPR",
         stylesheets: stylesheets,
@@ -155,30 +154,30 @@ app.get("/faq", (req, res) => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Cadastrar
-app.get("/cadastro", (req, res) =>
+router.get("/cadastro", (req, res) =>
 {
-    const stylesheets = "<link rel='stylesheet' href='/css/cadastro.css'>";
+    const stylesheets = "<link rel='stylesheet' href='css/cadastro.css'>";
     res.render("cadastro", {
         title: "Cadastro | EPR",
         stylesheets: stylesheets,
         errorvisible: "hidden"
     })
 })
-app.get("/termos", (req, res) =>
+router.get("/termos", (req, res) =>
 {
     res.status(200)
     res.render("termos", {
         title: "Termos de Uso | EPR"
     })
 })
-app.get("/privacidade", (req, res) =>
+router.get("/privacidade", (req, res) =>
 {
     res.status(200)
     res.render("privacidade", {
         title: "Política de Privacidade | EPR"
     })
 })
-app.post("/cadastro", (req, res) =>
+router.post("/cadastro", (req, res) =>
 {
     let email = req.body.email
     let emailcon = req.body.emailcon
@@ -202,7 +201,7 @@ app.post("/cadastro", (req, res) =>
                     }).save().then(function ()
                     {
                         res.status(200)
-                        res.redirect("/login")
+                        res.redirect(basePath + "login")
                         res.send("Ok")
                     }).catch(function (error)
                     {
@@ -233,22 +232,22 @@ app.post("/cadastro", (req, res) =>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Index routes
-app.get("/index", authenticationMiddleware(), function (req, res)
+router.get("/index", authenticationMiddleware(), function (req, res)
 {
-    const stylesheets = "<link rel='stylesheet' href='/css/index.css'>";
+    const stylesheets = "<link rel='stylesheet' href='css/index.css'>";
     res.render("index", {
         title: "Index | EPR",
         stylesheets: stylesheets
     })
 })
-app.get("/", function (req, res)
+router.get("/", function (req, res)
 {
-    res.redirect("/login")
+    res.redirect(basePath + "login")
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Categoria routes
-app.get("/categorias", authenticationMiddleware(), (req, res) =>
+router.get("/categorias", authenticationMiddleware(), (req, res) =>
 {
     let search = req.query.search
 
@@ -268,7 +267,7 @@ app.get("/categorias", authenticationMiddleware(), (req, res) =>
         }).catch(err => sendError500(req, res, err))
     })
 })
-app.delete("/categorias", authenticationMiddleware(), (req, res) =>
+router.delete("/categorias", authenticationMiddleware(), (req, res) =>
 {
     let id = req.body.catID
     let senha = req.body.senha
@@ -298,7 +297,7 @@ app.delete("/categorias", authenticationMiddleware(), (req, res) =>
         })
     }
 })
-app.post("/categorias", authenticationMiddleware(), function (req, res)
+router.post("/categorias", authenticationMiddleware(), function (req, res)
 {
     let nome = req.body.nome
     let senha = req.body.senha
@@ -340,7 +339,7 @@ app.post("/categorias", authenticationMiddleware(), function (req, res)
         })
     })
 })
-app.put("/categorias", authenticationMiddleware(), function (req, res)
+router.put("/categorias", authenticationMiddleware(), function (req, res)
 {
     let nome = req.body.nome
     let senha = req.body.senha
@@ -387,7 +386,7 @@ app.put("/categorias", authenticationMiddleware(), function (req, res)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Senhas routes
-app.get("/senhas", authenticationMiddleware(), (req, res) =>
+router.get("/senhas", authenticationMiddleware(), (req, res) =>
 {
     usuarioModel.findById(req.session.passport.user).then(user =>
     {
@@ -411,7 +410,7 @@ app.get("/senhas", authenticationMiddleware(), (req, res) =>
     })
 })
 
-app.post("/senhas", authenticationMiddleware(), (req, res) =>
+router.post("/senhas", authenticationMiddleware(), (req, res) =>
 {
     let descricao = req.body.descricao
     let usuario = req.body.username
@@ -464,7 +463,7 @@ app.post("/senhas", authenticationMiddleware(), (req, res) =>
     }
 })
 
-app.put("/senhas", authenticationMiddleware(), (req, res)=>
+router.put("/senhas", authenticationMiddleware(), (req, res)=>
 {
     let descricao = req.body.descricao
     let usuario = req.body.username
@@ -515,7 +514,7 @@ app.put("/senhas", authenticationMiddleware(), (req, res)=>
     }
 })
 
-app.delete("/senhas", authenticationMiddleware(), (req, res)=>
+router.delete("/senhas", authenticationMiddleware(), (req, res)=>
 {
     let senhaID = req.body.senhaID
 
@@ -537,6 +536,7 @@ app.delete("/senhas", authenticationMiddleware(), (req, res)=>
     }
 })
 
+app.use(basePath, router);
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Listening
 const port = parseInt(process.env.PORT) || 3000

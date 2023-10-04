@@ -8,7 +8,7 @@ function deletarSenhaDialog(senha)
         callbacks:{
             cancelClick: function (e)
             {
-                $.ajax("/senhas",
+                $.ajax("senhas",
                     {
                         type: "DELETE",
                         data:JSON.stringify({

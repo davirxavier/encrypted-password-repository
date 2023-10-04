@@ -24,12 +24,12 @@ loadIndex()
 
 export function loadIndex()
 {
-    $.get("/categorias", { search: searchBar.value }, (data, status) =>
+    $.get("categorias", { search: searchBar.value }, (data, status) =>
     {
         if (data !== undefined)
         {
             searchBar.value = ""
-            $.get("/senhas", function (dataS, status)
+            $.get("senhas", function (dataS, status)
             {
                 if (dataS && status === "success")
                 {
@@ -49,7 +49,7 @@ export function loadIndex()
                         nome.innerHTML = cat.nome
 
                         let expandIcon = document.createElement("img")
-                        expandIcon.src = "/img/expand_more_black24dp.png"
+                        expandIcon.src = "img/expand_more_black24dp.png"
 
                         let nomediv = document.createElement("div")
                         nomediv.appendChild(nome)
@@ -150,13 +150,13 @@ export function loadIndex()
                         {
                             if (categoriaAberta)
                             {
-                                expandIcon.src = "/img/expand_more_black24dp.png"
+                                expandIcon.src = "img/expand_more_black24dp.png"
 
                                 categoria.removeChild(divBaixo)
                             }
                             else
                             {
-                                expandIcon.src = "/img/expand_less_black24dp.png"
+                                expandIcon.src = "img/expand_less_black24dp.png"
 
                                 categoria.appendChild(divBaixo)
                             }

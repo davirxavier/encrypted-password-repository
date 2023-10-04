@@ -66,7 +66,7 @@ export function editarSenhaDialog(senha)
                                     name: "Excluir essa senha",
                                     button: true,
                                     id: "excluirSenhaButton",
-                                    icon: "/img/delete_black24dp.png"
+                                    icon: "img/delete_black24dp.png"
                                 }
                             ],
                             {
@@ -109,7 +109,7 @@ export function editarSenhaDialog(senha)
                                         let senhaConta = senhaInput.value
                                         let senhaID = senha._id
 
-                                        $.ajax("/senhas",
+                                        $.ajax("senhas",
                                             {
                                                 type: "PUT",
                                                 data:JSON.stringify({
