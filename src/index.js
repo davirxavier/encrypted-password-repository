@@ -71,7 +71,7 @@ function authenticationMiddleware()
             return next()
         }
 
-        res.redirect('../login?fail=notlogged')
+        res.redirect('login?fail=notlogged')
     }
 }
 
@@ -81,7 +81,7 @@ router.get("/login", function (req, res)
 {
     if (req.isAuthenticated())
     {
-        res.redirect("../index")
+        res.redirect("index")
         return;
     }
 
@@ -113,8 +113,8 @@ router.get("/login", function (req, res)
 router.post('/login', function (req, res, next)
 {
     passport.authenticate("local", {
-        successRedirect: "../index",
-        failureRedirect: "../login?fail=incorrect"
+        successRedirect: "index",
+        failureRedirect: "login?fail=incorrect"
     }, function (err, user, info)
     {
         if (err)
@@ -123,7 +123,7 @@ router.post('/login', function (req, res, next)
         }
         if (!user)
         {
-            return res.redirect("../login?fail=incorrect")
+            return res.redirect("login?fail=incorrect")
         }
 
         req.logIn(user, function (err)
@@ -132,13 +132,13 @@ router.post('/login', function (req, res, next)
             {
                 return next(err);
             }
-            return res.redirect("../index");
+            return res.redirect("index");
         });
     })(req, res, next)
 })
 router.get("/logout", authenticationMiddleware(), (req, res) =>
 {
-    req.logout(() => res.redirect("../login"));
+    req.logout(() => res.redirect("login"));
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ router.post("/cadastro", (req, res) =>
                     }).save().then(function ()
                     {
                         res.status(200)
-                        res.redirect("../login")
+                        res.redirect("login")
                         res.send("Ok")
                     }).catch(function (error)
                     {
@@ -242,7 +242,7 @@ router.get("/index", authenticationMiddleware(), function (req, res)
 })
 router.get("/", function (req, res)
 {
-    res.redirect("../login")
+    res.redirect("login")
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
