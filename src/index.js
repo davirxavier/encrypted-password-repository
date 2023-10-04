@@ -242,7 +242,7 @@ router.get("/index", authenticationMiddleware(), function (req, res)
 })
 router.get("/", function (req, res)
 {
-    res.redirect("login")
+    res.redirect("./login")
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
