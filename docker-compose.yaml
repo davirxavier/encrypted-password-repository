@@ -5,6 +5,8 @@ services:
     image: epr-server
     pull_policy: build
     restart: unless-stopped
+    depends_on:
+      - epr-db
     build:
       context: .
       dockerfile: Dockerfile
