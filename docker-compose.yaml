@@ -4,6 +4,7 @@ services:
   epr-server:
     image: epr-server
     pull_policy: build
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,5 +16,6 @@ services:
       - "${EXTERNAL_SERVER_PORT}:3000"
   epr-db:
     image: mongo:latest
+    restart: unless-stopped
     volumes:
       - ${MONGO_DB_VOLUME_PATH}:/data/db
